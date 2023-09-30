@@ -15,10 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, register_converter
+
 from tasks.views import list_tasks_for_day
+from calendar_app.converters import DateConverter
+
+register_converter(DateConverter, "date")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', list_tasks_for_day)
+    path('', list_tasks_for_day),
+    path('tasks/<date:date>', list_tasks_for_day)
 ]
