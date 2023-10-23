@@ -5,10 +5,10 @@ from django.shortcuts import render
 from tasks.models import Task
 
 
-def list_tasks_for_day(request):
-    # FIXME: Задачи отображаются на текущий день. Нужно сделать выбор даты
+def list_tasks_for_day(request, date=None):
+    if not date:
+        date = datetime.datetime.today()
 
-    date = datetime.datetime.today()
     active_tasks_for_date = Task.objects.filter(
         start_at__lte=date,
         finish_at__gte=date
